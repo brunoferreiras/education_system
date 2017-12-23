@@ -1,10 +1,20 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements TableInterface
 {
@@ -29,7 +39,7 @@ class User extends Authenticatable implements TableInterface
     ];
 
     /**
-     * A list of headers to be used when a table is displayed
+     * A list of headers to be used when a table is displayed.
      *
      * @return array
      */
@@ -43,6 +53,7 @@ class User extends Authenticatable implements TableInterface
      * passed to any callback functions that are being used.
      *
      * @param string $header
+     *
      * @return mixed
      */
     public function getValueForHeader($header)
