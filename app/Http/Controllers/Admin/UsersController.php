@@ -6,6 +6,7 @@ use App\Forms\UserForm;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Kris\LaravelFormBuilder\Form;
 
 class UsersController extends Controller
 {
@@ -41,7 +42,22 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /** @var Form $form */
+        $form = \FormBuilder::create(UserForm::class);
+
+        if(!$form->isValid()) {
+            return redirect()
+                ->back()
+                ->withErrors($form->getErrors())
+                ->withInput();
+        }
+
+        $data = $form->getFieldValues();
+        $password = str_random(6);
+        $data['password'] = $password;
+        User::create($data);
+
+        return redirect()->route('admin.users.index');
     }
 
     /**
