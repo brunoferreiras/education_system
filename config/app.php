@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
         \Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
+        Bootstrapper\BootstrapperL5ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -227,6 +228,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'FormBuilder' => \Kris\LaravelFormBuilder\Facades\FormBuilder::class,
+        'Table' => Bootstrapper\Facades\Table::class,
+        'Button' => Bootstrapper\Facades\Button::class,
     ],
 
 ];
