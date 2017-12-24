@@ -39,7 +39,7 @@
                         ->withContent(Navigation::links($arrayLinksRight)->right());
 
                 $formLogout = FormBuilder::plain([
-                    'id' => 'form-delete',
+                    'id' => 'form-logout',
                     'url' => route('logout'),
                     'method' => 'POST',
                     'style' => 'display: none'
@@ -48,7 +48,11 @@
         @endphp
         {!! $navbar !!}
         {!! form($formLogout) !!}
-
+        @if(Session::has('message'))
+            <div class="container">
+                {!! Alert::success(Session::get('message'))->close() !!}
+            </div>
+        @endif
         @yield('content')
     </div>
 
