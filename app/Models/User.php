@@ -12,6 +12,7 @@
 
 namespace App\Models;
 
+use App\Notifications\UserCreated;
 use Bootstrapper\Interfaces\TableInterface;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,9 +46,13 @@ class User extends Authenticatable implements TableInterface
     {
         $password = str_random(6);
         $data['password'] = $password;
+        /** @var User $user */
         $user = parent::create($data+['enrolment' => str_random(6)]);
         self::assignEnrolment($user, self::ROLE_ADMIN);
         $user->save();
+        if(isset($data['send_mail'])) {
+            $user->notify(new UserCreated());
+        }
         return $user;
     }
 
