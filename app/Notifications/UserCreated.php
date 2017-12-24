@@ -10,15 +10,16 @@ use Illuminate\Notifications\Messages\MailMessage;
 class UserCreated extends Notification
 {
     use Queueable;
+    private $token;
 
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param $token
      */
-    public function __construct()
+    public function __construct($token)
     {
-        //
+        $this->token = $token;
     }
 
     /**
@@ -45,6 +46,7 @@ class UserCreated extends Notification
                     ->subject("Sua conta no $appName foi criada")
                     ->greeting("Olá {$notifiable->name}, seja bem-vindo ao $appName")
                     ->line("Seu número de matrícula é: {$notifiable->enrolment}")
+                    ->action('Clique aqui para redefinir sua senha', route('password.reset', $this->token))
                     ->line('Obrigado por usar nossa aplicação!')
                     ->salutation("Atenciosamente, $appName");
     }
