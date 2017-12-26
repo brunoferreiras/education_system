@@ -54,7 +54,7 @@ class User extends Authenticatable implements TableInterface
             $token = \Password::broker()->createToken($user);
             $user->notify(new UserCreated($token));
         }
-        return $user;
+        return compact('user', 'password');
     }
 
     public static function assignEnrolment(User $user, $type)
