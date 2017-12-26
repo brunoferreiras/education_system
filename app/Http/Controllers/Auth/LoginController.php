@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Models\Admin;
 
 class LoginController extends Controller
 {
@@ -38,11 +39,16 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     protected function credentials(Request $request)
     {
         $data = $request->only($this->username(), 'password');
         $usernameKey = $this->usernameKey();
         $data[$usernameKey] = $data[$this->username()];
+        $data['userable_type'] = Admin::class;
         unset($data[$this->username()]);
         return $data;
     }
