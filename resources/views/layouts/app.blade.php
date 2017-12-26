@@ -18,9 +18,13 @@
         @php
             $navbar = Navbar::withBrand(config('app.name'), route('admin.dashboard'))->inverse();
             if(Auth::check()) {
-                $arrayLinks = [
-                    ['link' => route('admin.users.index'), 'title' => 'Usuário']
-                ];
+                if(\Gate::allows('admin')) {
+                    $arrayLinks = [
+                        ['link' => route('admin.users.index'), 'title' => 'Usuário']
+                    ];
+                    $navbar->withContent(Navigation::links($arrayLinks));
+                }
+
                 $arrayLinksRight = [
                     [
                         Auth::user()->name,
@@ -35,8 +39,7 @@
                         ]
                     ]
                 ];
-                $navbar->withContent(Navigation::links($arrayLinks))
-                        ->withContent(Navigation::links($arrayLinksRight)->right());
+                $navbar->withContent(Navigation::links($arrayLinksRight)->right());
 
                 $formLogout = FormBuilder::plain([
                     'id' => 'form-logout',
