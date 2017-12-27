@@ -11,10 +11,13 @@
             Table::withContents($class_informations->items())
             ->striped()
             ->callback('Ações', function($field, $model) {
-                $linkShow = route('admin.class_informations.show', ['subject' => $model->id]);
-                $linkEdit = route('admin.class_informations.edit', ['subject' => $model->id]);
-                return Button::link(Icon::create('folder-open').'&nbsp;&nbsp;Ver')->asLinkTo($linkShow).'|'.
-                       Button::link(Icon::create('pencil').' Editar')->asLinkTo($linkEdit);
+                $linkShow = route('admin.class_informations.show', ['class_information' => $model->id]);
+                $linkEdit = route('admin.class_informations.edit', ['class_information' => $model->id]);
+                $linkStudents = route('admin.class_informations.students.index', ['class_information' => $model->id]);
+                return
+                    Button::link(Icon::create('pencil').' Editar')->asLinkTo($linkEdit).'|'.
+                    Button::link(Icon::create('folder-open').'&nbsp;&nbsp;Ver')->asLinkTo($linkShow).'|'.
+                    Button::link(Icon::create('home').'&nbsp;&nbsp;Alunos')->asLinkTo($linkStudents);
             })
             !!}
         </div>
