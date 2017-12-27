@@ -11,6 +11,13 @@ class ClassInformationsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\ClassInformation::class, 50)->create();
+        $students = \App\Models\Subject::all();
+        factory(\App\Models\ClassInformation::class, 50)
+            ->create()
+            ->each(function(\App\Models\ClassInformation $model) use ($students) {
+                /** @var \Illuminate\Support\Collection $studentsCollection */
+                $studentsCollection = $students->random(10);
+                $model->students()->attach($studentsCollection->pluck('id'));
+            });
     }
 }
