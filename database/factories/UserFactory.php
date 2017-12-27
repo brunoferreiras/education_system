@@ -40,3 +40,9 @@ $factory->define(\App\Models\UserProfile::class, function(Faker $faker) {
     ];
 });
 
+$factory->define(\App\Models\Subject::class, function(Faker $faker) {
+    return [
+        'name' => $faker->word,
+    ];
+});
+

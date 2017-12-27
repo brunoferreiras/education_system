@@ -20,7 +20,8 @@
             if(Auth::check()) {
                 if(\Gate::allows('admin')) {
                     $arrayLinks = [
-                        ['link' => route('admin.users.index'), 'title' => 'Usuário']
+                        ['link' => route('admin.users.index'), 'title' => 'Usuário'],
+                        ['link' => route('admin.subjects.index'), 'title' => 'Disciplinas'],
                     ];
                     $navbar->withContent(Navigation::links($arrayLinks));
                 }
