@@ -24370,6 +24370,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             minimumInputLength: 1
         });
+
+        var self = this;
+        $("select[name=students]").on('select2:select', function (event) {
+            __WEBPACK_IMPORTED_MODULE_1__store_store__["a" /* default */].dispatch('classStudent/store', {
+                studentId: event.params.data.id,
+                classInformationId: self.classInformation
+            }).then(function () {
+                return alert('Aluno adicionado com sucesso.');
+            });
+        });
     }
 });
 
@@ -25415,7 +25425,7 @@ var index_esm = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_resource__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_resources__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_adminConfig__ = __webpack_require__(32);
@@ -25428,6 +25438,9 @@ var state = {
 };
 
 var mutations = {
+    add: function add(state, student) {
+        state.students.push(student);
+    },
     set: function set(state, students) {
         state.students = students;
     }
@@ -25437,6 +25450,14 @@ var actions = {
     query: function query(context, classInformationId) {
         return __WEBPACK_IMPORTED_MODULE_1_vue___default.a.http.get(__WEBPACK_IMPORTED_MODULE_2__services_adminConfig__["a" /* default */].ADMIN_URL + '/class_informations/' + classInformationId + '/students').then(function (response) {
             context.commit('set', response.data);
+        });
+    },
+    store: function store(context, _ref) {
+        var studentId = _ref.studentId,
+            classInformationId = _ref.classInformationId;
+
+        return __WEBPACK_IMPORTED_MODULE_0__services_resources__["a" /* ClassStudent */].save({ class_information: classInformationId }, { student_id: studentId }).then(function (response) {
+            context.commit('add', response.data);
         });
     }
 };
@@ -32903,6 +32924,26 @@ S2.define('jquery.select2',[
   // Return the Select2 instance for anyone who is importing it.
   return select2;
 }));
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClassStudent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_resource__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adminConfig__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue__);
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_2_vue___default.a.http.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+
+var ClassStudent = __WEBPACK_IMPORTED_MODULE_2_vue___default.a.resource(__WEBPACK_IMPORTED_MODULE_1__adminConfig__["a" /* default */].ADMIN_URL + '/class_informations/{class_information}/students/{student}');
+
 
 
 /***/ })

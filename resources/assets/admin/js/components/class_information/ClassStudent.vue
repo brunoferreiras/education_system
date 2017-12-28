@@ -56,6 +56,14 @@
                 },
                 minimumInputLength: 1,
             });
+
+            let self = this;
+            $("select[name=students]").on('select2:select', event => {
+                store.dispatch('classStudent/store', {
+                    studentId: event.params.data.id,
+                    classInformationId: self.classInformation
+                }).then(() => alert('Aluno adicionado com sucesso.'));
+            });
         }
     }
 </script>
