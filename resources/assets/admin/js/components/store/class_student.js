@@ -12,6 +12,15 @@ const mutations = {
     },
     set(state, students) {
         state.students = students;
+    },
+    destroy(state, student) {
+        let index = state.students.findIndex((student) => {
+           return item.id == studentId;
+        });
+
+        if(index != -1) {
+            state.students.slice(index, 1);
+        }
     }
 };
 
@@ -26,6 +35,12 @@ const actions = {
         return ClassStudent.save({class_information: classInformationId}, {student_id: studentId})
             .then(response => {
                 context.commit('add', response.data);
+            });
+    },
+    destroy(context, {studentId, classInformationId}) {
+        return ClassStudent.delete({class_information: classInformationId, student: studentId})
+            .then(response => {
+                context.commit('destroy', studentId);
             });
     }
 };

@@ -43,8 +43,9 @@ class ClassStudentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ClassInformation $class_information, Student $student)
     {
-        //
+        $class_information->students()->detach([$student->id]);
+        return response()->json([], 204);
     }
 }

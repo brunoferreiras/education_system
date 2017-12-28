@@ -24338,6 +24338,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -24387,6 +24391,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
         });
+    },
+
+    methods: {
+        destroy: function destroy(student) {
+            if (confirm('Deseja remover este aluno?')) {
+                __WEBPACK_IMPORTED_MODULE_1__store_store__["a" /* default */].dispatch('classStudent/destroy', {
+                    studentId: student.id,
+                    classInformationId: this.classInformation
+                });
+            }
+        }
     }
 });
 
@@ -24408,7 +24423,24 @@ var render = function() {
         "tbody",
         _vm._l(_vm.students, function(student) {
           return _c("tr", [
-            _c("td", [_vm._v("Excluir")]),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.destroy(student)
+                    }
+                  }
+                },
+                [
+                  _c("span", { staticClass: "glyphicon glyphicon-trash" }),
+                  _vm._v(" Excluir\n                ")
+                ]
+              )
+            ]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(student.user.name))])
           ])
@@ -25450,6 +25482,15 @@ var mutations = {
     },
     set: function set(state, students) {
         state.students = students;
+    },
+    destroy: function destroy(state, student) {
+        var index = state.students.findIndex(function (student) {
+            return item.id == studentId;
+        });
+
+        if (index != -1) {
+            state.students.slice(index, 1);
+        }
     }
 };
 
@@ -25465,6 +25506,14 @@ var actions = {
 
         return __WEBPACK_IMPORTED_MODULE_0__services_resources__["a" /* ClassStudent */].save({ class_information: classInformationId }, { student_id: studentId }).then(function (response) {
             context.commit('add', response.data);
+        });
+    },
+    destroy: function destroy(context, _ref2) {
+        var studentId = _ref2.studentId,
+            classInformationId = _ref2.classInformationId;
+
+        return __WEBPACK_IMPORTED_MODULE_0__services_resources__["a" /* ClassStudent */].delete({ class_information: classInformationId, student: studentId }).then(function (response) {
+            context.commit('destroy', studentId);
         });
     }
 };
