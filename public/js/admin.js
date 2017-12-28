@@ -25483,13 +25483,13 @@ var mutations = {
     set: function set(state, students) {
         state.students = students;
     },
-    destroy: function destroy(state, student) {
-        var index = state.students.findIndex(function (student) {
+    destroy: function destroy(state, studentId) {
+        var index = state.students.findIndex(function (item) {
             return item.id == studentId;
         });
 
         if (index != -1) {
-            state.students.slice(index, 1);
+            state.students.splice(index, 1);
         }
     }
 };

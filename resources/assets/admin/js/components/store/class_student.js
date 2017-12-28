@@ -13,13 +13,13 @@ const mutations = {
     set(state, students) {
         state.students = students;
     },
-    destroy(state, student) {
-        let index = state.students.findIndex((student) => {
+    destroy(state, studentId) {
+        let index = state.students.findIndex((item) => {
            return item.id == studentId;
         });
 
         if(index != -1) {
-            state.students.slice(index, 1);
+            state.students.splice(index, 1);
         }
     }
 };
