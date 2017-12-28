@@ -7,16 +7,16 @@
 
         <table class="table table-bordered">
             <thead>
-                <tr>
-                    <th></th>
-                    <th>Nome</th>
-                </tr>
+            <tr>
+                <th></th>
+                <th>Nome</th>
+            </tr>
             </thead>
             <tbody>
-                <tr v-for="student in students">
-                    <td>Excluir</td>
-                    <td>{{student.user.name }}</td>
-                </tr>
+            <tr v-for="student in students">
+                <td>Excluir</td>
+                <td>{{student.user.name }}</td>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -41,10 +41,20 @@
                     url: `${ADMIN_CONFIG.API_URL}/students`,
                     dataType: 'json',
                     delay: 250,
+                    data(params) {
+                      return {
+                          q: params.term
+                      }
+                    },
                     processResults(data) {
-
+                        return {
+                            results: data.map((student) => {
+                                return {id: student.id, text: student.user.name}
+                            })
+                        }
                     }
-                }
+                },
+                minimumInputLength: 1,
             });
         }
     }
