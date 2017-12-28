@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\ClassStudentRequest;
 use App\Models\ClassInformation;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -28,9 +30,11 @@ class ClassStudentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClassStudentRequest $request, ClassInformation $class_information)
     {
-        //
+        $student = Student::find($request->get('student_id'));
+        $class_information->students()->save($student);
+        return $student;
     }
 
     /**
