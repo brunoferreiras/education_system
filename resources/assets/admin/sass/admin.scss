@@ -5,6 +5,11 @@
 // Variables
 @import "variables";
 
+// PNotify
+@import "node_modules/pnotify/src/pnotify";
+@import "node_modules/pnotify/src/pnotify.brighttheme";
+@import "node_modules/pnotify/src/pnotify.buttons";
+
 // Select2
 @import "node_modules/select2/src/scss/core.scss";
 

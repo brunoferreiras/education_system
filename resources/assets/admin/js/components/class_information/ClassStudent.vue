@@ -62,7 +62,14 @@
                 store.dispatch('classStudent/store', {
                     studentId: event.params.data.id,
                     classInformationId: self.classInformation
-                }).then(() => alert('Aluno adicionado com sucesso.'));
+                }).then(() => {
+                    new PNotify({
+                        title: 'Aviso',
+                        text: 'Aluno adicionado com sucesso',
+                        styling: 'brighttheme',
+                        type: 'success'
+                    });
+                });
             });
         }
     }
