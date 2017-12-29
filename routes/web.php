@@ -41,8 +41,9 @@ Route::prefix('admin')->group(function () {
         Route::resource('subjects', 'SubjectsController');
         Route::group(['prefix' => 'class_informations/{class_information}', 'as' => 'class_informations.'], function() {
             Route::resource('students', 'ClassStudentsController', ['only' => ['index', 'store', 'destroy']]);
+            Route::resource('teachings', 'ClassTeachingsController', ['only' => ['index', 'store', 'destroy']]);
         });
-        Route::resource('class_informations', 'ClassInformationController');
+        Route::resource('class_informations', 'ClassInformationsController');
     });
 
     Route::group([

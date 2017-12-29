@@ -7,7 +7,7 @@ use App\Models\ClassInformation;
 use Illuminate\Http\Request;
 use App\Forms\ClassInformationForm;
 
-class ClassInformationController extends Controller
+class ClassInformationsController extends Controller
 {
     /**
      * Display a listing of the resource.
