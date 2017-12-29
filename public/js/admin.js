@@ -24616,13 +24616,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__class_student__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__class_teaching__ = __webpack_require__(40);
+
 
 
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
-  modules: {
-    classStudent: __WEBPACK_IMPORTED_MODULE_1__class_student__["a" /* default */]
-  }
+    modules: {
+        classStudent: __WEBPACK_IMPORTED_MODULE_1__class_student__["a" /* default */],
+        classTeaching: __WEBPACK_IMPORTED_MODULE_2__class_teaching__["a" /* default */]
+    }
 }));
 
 /***/ }),
@@ -25642,6 +25645,7 @@ var module = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClassStudent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ClassTeaching; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_resource__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adminConfig__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue__ = __webpack_require__(1);
@@ -25653,6 +25657,7 @@ var module = {
 __WEBPACK_IMPORTED_MODULE_2_vue___default.a.http.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
 
 var ClassStudent = __WEBPACK_IMPORTED_MODULE_2_vue___default.a.resource(__WEBPACK_IMPORTED_MODULE_1__adminConfig__["a" /* default */].ADMIN_URL + '/class_informations/{class_information}/students/{student}');
+var ClassTeaching = __WEBPACK_IMPORTED_MODULE_2_vue___default.a.resource(__WEBPACK_IMPORTED_MODULE_1__adminConfig__["a" /* default */].ADMIN_URL + '/class_informations/{class_information}/teachings/{teaching}');
 
 
 
@@ -33296,12 +33301,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['classInformation'],
     computed: {
         teachings: function teachings() {
-            // return store.state.classTeaching.teachings;
-            return [];
+            return __WEBPACK_IMPORTED_MODULE_1__store_store__["a" /* default */].state.classTeaching.teachings;
         }
     },
     mounted: function mounted() {
-        // store.dispatch('classTeaching/query', this.classInformation);
+        __WEBPACK_IMPORTED_MODULE_1__store_store__["a" /* default */].dispatch('classTeaching/query', this.classInformation);
         var selects = [{
             url: __WEBPACK_IMPORTED_MODULE_0__services_adminConfig__["a" /* default */].API_URL + '/teachers',
             selector: "select[name=teachers]",
@@ -33361,6 +33365,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     throw _iteratorError;
                 }
             }
+        }
+    },
+
+    methods: {
+        destroy: function destroy(student) {
+            if (confirm('Deseja remover este aluno?')) {
+                __WEBPACK_IMPORTED_MODULE_1__store_store__["a" /* default */].dispatch('classTeaching/destroy', {
+                    studentId: student.id,
+                    classInformation: this.classInformation
+                });
+            }
+        },
+        store: function store() {
+            __WEBPACK_IMPORTED_MODULE_1__store_store__["a" /* default */].dispatch('classTeaching/store', {
+                teacherId: $("select[name=teachers]").val(),
+                subjectId: $("select[name=subjects]").val(),
+                classInformationId: this.classInformation
+            }).then(function (response) {
+                new PNotify({
+                    title: 'Aviso',
+                    text: 'Ensino adicionado com sucesso',
+                    styling: 'brighttheme',
+                    type: 'success'
+                });
+            });
         }
     }
 });
@@ -33483,6 +33512,73 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-3f6eeb14", module.exports)
   }
 }
+
+/***/ }),
+/* 40 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_resources__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_adminConfig__ = __webpack_require__(2);
+
+
+
+
+var state = {
+    teachings: []
+};
+
+var mutations = {
+    add: function add(state, student) {
+        state.teachings.push(student);
+    },
+    set: function set(state, teachings) {
+        state.teachings = teachings;
+    },
+    destroy: function destroy(state, teachingId) {
+        var index = state.teachings.findIndex(function (item) {
+            return item.id == teachingId;
+        });
+
+        if (index != -1) {
+            state.teachings.splice(index, 1);
+        }
+    }
+};
+
+var actions = {
+    query: function query(context, classInformationId) {
+        return __WEBPACK_IMPORTED_MODULE_1_vue___default.a.http.get(__WEBPACK_IMPORTED_MODULE_2__services_adminConfig__["a" /* default */].ADMIN_URL + '/class_informations/' + classInformationId + '/teachings').then(function (response) {
+            context.commit('set', response.data);
+        });
+    },
+    store: function store(context, _ref) {
+        var teacherId = _ref.teacherId,
+            subjectId = _ref.subjectId,
+            classInformationId = _ref.classInformationId;
+
+        return __WEBPACK_IMPORTED_MODULE_0__services_resources__["b" /* ClassTeaching */].save({ class_information: classInformationId }, { teacher_id: teacherId, subject_id: subjectId }).then(function (response) {
+            context.commit('add', response.data);
+        });
+    },
+    destroy: function destroy(context, _ref2) {
+        var teachingId = _ref2.teachingId,
+            classInformationId = _ref2.classInformationId;
+
+        return __WEBPACK_IMPORTED_MODULE_0__services_resources__["b" /* ClassTeaching */].delete({ class_information: classInformationId, teaching: teachingId }).then(function (response) {
+            context.commit('destroy', teachingId);
+        });
+    }
+};
+
+var module = {
+    namespaced: true,
+    state: state, mutations: mutations, actions: actions
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (module);
 
 /***/ })
 /******/ ]);

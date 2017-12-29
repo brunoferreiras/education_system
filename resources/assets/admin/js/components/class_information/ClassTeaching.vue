@@ -48,12 +48,11 @@
         props: ['classInformation'],
         computed: {
             teachings(){
-                // return store.state.classTeaching.teachings;
-                return [];
+                return store.state.classTeaching.teachings;
             }
         },
         mounted(){
-            // store.dispatch('classTeaching/query', this.classInformation);
+            store.dispatch('classTeaching/query', this.classInformation);
             let selects = [
                 {
                     url: `${ADMIN_CONFIG.API_URL}/teachers`,
@@ -94,6 +93,30 @@
                     },
                     minimumInputLength: 1,
                 });
+            }
+        },
+        methods: {
+            destroy(student) {
+                if(confirm('Deseja remover este aluno?')) {
+                    store.dispatch('classTeaching/destroy', {
+                        studentId: student.id,
+                        classInformation: this.classInformation
+                    })
+                }
+            },
+            store() {
+                store.dispatch('classTeaching/store', {
+                    teacherId: $("select[name=teachers]").val(),
+                    subjectId: $("select[name=subjects]").val(),
+                    classInformationId: this.classInformation
+                }).then(response => {
+                    new PNotify({
+                        title: 'Aviso',
+                        text: 'Ensino adicionado com sucesso',
+                        styling: 'brighttheme',
+                        type: 'success'
+                    });
+                })
             }
         }
     }

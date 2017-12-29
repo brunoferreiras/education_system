@@ -31,7 +31,7 @@ class ClassTeachingsController extends Controller
      */
     public function store(ClassTeachingRequest $request, ClassInformation $class_information)
     {
-        $teaching = $class_information->teaches()->create([
+        $teaching = $class_information->teachings()->create([
             'subject_id' => $request->get('subject_id'),
             'teacher_id' => $request->get('teacher_id')
         ]);

@@ -28,4 +28,13 @@ class ClassTeaching extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
+
+    public function toArray()
+    {
+        $data = parent::toArray();
+        $data['teacher'] = $this->teacher;
+        $data['subject'] = $this->subject;
+        $data['class_information'] = $this->classInformation;
+        return $data;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ClassTeachingRequest extends FormRequest
 {
@@ -26,10 +27,10 @@ class ClassTeachingRequest extends FormRequest
         $class_information = $this->route('class_information');
         return [
             'teacher_id' => 'required|exists:teachers,id',
-            'student_id' => [
+            'subject_id' => [
                 'required',
                 'exists:subjects,id',
-                Rule::unique('class_teaching', 'subject_id')
+                Rule::unique('class_teachings', 'subject_id')
                     ->where('class_information_id', $class_information->id)
                     ->where('teacher_id', $this->get('teacher_id'))
             ]
