@@ -21325,6 +21325,7 @@ window.Vue = __webpack_require__(1);
 
 Vue.component('example-component', __webpack_require__(14));
 Vue.component('class-student', __webpack_require__(17));
+Vue.component('class-teaching', __webpack_require__(37));
 
 var app = new Vue({
     el: '#app'
@@ -33178,6 +33179,310 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(5)
+/* script */
+var __vue_script__ = __webpack_require__(38)
+/* template */
+var __vue_template__ = __webpack_require__(39)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/admin/js/components/class_information/ClassTeaching.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3f6eeb14", Component.options)
+  } else {
+    hotAPI.reload("data-v-3f6eeb14", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_adminConfig__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_store__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_select2__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_select2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_select2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['classInformation'],
+    computed: {
+        teachings: function teachings() {
+            // return store.state.classTeaching.teachings;
+            return [];
+        }
+    },
+    mounted: function mounted() {
+        // store.dispatch('classTeaching/query', this.classInformation);
+        var selects = [{
+            url: __WEBPACK_IMPORTED_MODULE_0__services_adminConfig__["a" /* default */].API_URL + '/teachers',
+            selector: "select[name=teachers]",
+            processResults: function processResults(data) {
+                return {
+                    results: data.map(function (teacher) {
+                        return { id: teacher.id, text: teacher.user.name };
+                    })
+                };
+            }
+        }, {
+            url: __WEBPACK_IMPORTED_MODULE_0__services_adminConfig__["a" /* default */].API_URL + '/subjects',
+            selector: "select[name=subjects]",
+            processResults: function processResults(data) {
+                return {
+                    results: data.map(function (subject) {
+                        return { id: subject.id, text: subject.name };
+                    })
+                };
+            }
+        }];
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = selects[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var item = _step.value;
+
+                $(item.selector).select2({
+                    ajax: {
+                        url: item.url,
+                        dataType: 'json',
+                        delay: 250,
+                        data: function data(params) {
+                            return {
+                                q: params.term
+                            };
+                        },
+
+                        processResults: item.processResults
+                    },
+                    minimumInputLength: 1
+                });
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.store()
+          }
+        }
+      },
+      [_vm._v("Adicionar")]
+    ),
+    _vm._v(" "),
+    _c("br"),
+    _c("br"),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-bordered" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.teachings, function(teaching) {
+          return _c("tr", [
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.destroy(teaching)
+                    }
+                  }
+                },
+                [
+                  _c("span", { staticClass: "glyphicon glyphicon-trash" }),
+                  _vm._v(" Excluir\n                ")
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(teaching.teacher.user.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(teaching.subject.name))])
+          ])
+        })
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "control-label" }, [
+            _vm._v("Selecionar professor")
+          ]),
+          _vm._v(" "),
+          _c("select", {
+            staticClass: "form-control",
+            attrs: { name: "teachers" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "control-label" }, [
+            _vm._v("Selecionar disciplina")
+          ]),
+          _vm._v(" "),
+          _c("select", {
+            staticClass: "form-control",
+            attrs: { name: "subjects" }
+          })
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th"),
+        _vm._v(" "),
+        _c("th", [_vm._v("Professor")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Disciplina")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3f6eeb14", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

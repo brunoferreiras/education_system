@@ -53,6 +53,8 @@ Route::prefix('admin')->group(function () {
         'prefix' => 'api'
     ], function () {
         Route::name('students.index')->get('students', 'StudentsController@index');
+        Route::name('subjects.index')->get('subjects','SubjectsController@index');
+        Route::name('teachers.index')->get('teachers','TeachersController@index');
     });
 });
 
