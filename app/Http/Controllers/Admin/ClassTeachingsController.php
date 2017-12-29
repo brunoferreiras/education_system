@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClassTeachingRequest;
 use App\Models\ClassInformation;
+use App\Models\ClassTeaching;
 
 class ClassTeachingsController extends Controller
 {

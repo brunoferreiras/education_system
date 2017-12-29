@@ -33369,11 +33369,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        destroy: function destroy(student) {
-            if (confirm('Deseja remover este aluno?')) {
+        destroy: function destroy(teaching) {
+            if (confirm('Deseja remover este ensino?')) {
                 __WEBPACK_IMPORTED_MODULE_1__store_store__["a" /* default */].dispatch('classTeaching/destroy', {
-                    studentId: student.id,
-                    classInformation: this.classInformation
+                    teachingId: teaching.id,
+                    classInformationId: this.classInformation
                 });
             }
         },

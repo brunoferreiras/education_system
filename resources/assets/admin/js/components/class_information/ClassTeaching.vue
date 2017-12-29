@@ -96,11 +96,11 @@
             }
         },
         methods: {
-            destroy(student) {
-                if(confirm('Deseja remover este aluno?')) {
+            destroy(teaching) {
+                if(confirm('Deseja remover este ensino?')) {
                     store.dispatch('classTeaching/destroy', {
-                        studentId: student.id,
-                        classInformation: this.classInformation
+                        teachingId: teaching.id,
+                        classInformationId: this.classInformation
                     })
                 }
             },
